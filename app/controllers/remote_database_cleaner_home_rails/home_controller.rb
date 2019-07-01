@@ -1,11 +1,12 @@
 module RemoteDatabaseCleanerHomeRails
-  class HomeController < ApplicationController 
+  class HomeController < ApplicationController
 
     skip_before_filter *RemoteDatabaseCleanerHomeRails.skip_before_filter
-    
-    def clean 
+    skip_around_filter *RemoteDatabaseCleanerHomeRails.skip_around_filter
+
+    def clean
       if RemoteDatabaseCleanerHomeRails.enabled?
-        DatabaseCleaner.strategy = strategy 
+        DatabaseCleaner.strategy = strategy
         DatabaseCleaner.clean
         render json: {response: 200}
       else

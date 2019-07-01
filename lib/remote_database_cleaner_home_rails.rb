@@ -12,6 +12,11 @@ module RemoteDatabaseCleanerHomeRails
     config.strategy
   end
 
+  def self.skip_around_filter
+    filters = config.skip_around_filter
+    filters.present? ? [filters].flatten.map(&:to_sym) : nil
+  end
+
   def self.skip_before_filter
     filters = config.skip_before_filter
     filters.present? ? [filters].flatten.map(&:to_sym) : nil
@@ -26,11 +31,11 @@ module RemoteDatabaseCleanerHomeRails
   end
 
   def self.enable!
-    config.enable = ON 
+    config.enable = ON
   end
 
   def self.disable!
-    config.enable = OFF 
+    config.enable = OFF
   end
 
   def self.enabled?
@@ -40,5 +45,6 @@ module RemoteDatabaseCleanerHomeRails
   def self.reset
     config.enable = OFF
     config.skip_before_filter = nil
+    config.skip_around_filter = nil
   end
 end
